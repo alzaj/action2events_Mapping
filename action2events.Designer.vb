@@ -16,7 +16,7 @@ Imports System.ComponentModel
 Imports System.Xml.Serialization
 Imports System.Runtime.Serialization
 
-<Assembly: EdmSchemaAttribute("2297f480-6a5b-4d9a-b6f5-789bca6f1fc0")>
+<Assembly: EdmSchemaAttribute("9055fc79-6b74-48df-842b-ad9151f76c66")>
 #Region "EDM Relationship Metadata"
 <Assembly: EdmRelationshipAttribute("action2eventsModel", "FK_task2event_events", "events", System.Data.Metadata.Edm.RelationshipMultiplicity.One, GetType([event]), "task2event", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, GetType(task2event), True)>
 <Assembly: EdmRelationshipAttribute("action2eventsModel", "FK_task2event_tasks", "tasks", System.Data.Metadata.Edm.RelationshipMultiplicity.One, GetType(task), "task2event", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, GetType(task2event), True)>
@@ -256,7 +256,7 @@ Public Partial Class [event]
     <SoapIgnoreAttribute()>
     <DataMemberAttribute()>
     <EdmRelationshipNavigationPropertyAttribute("action2eventsModel", "FK_task2event_events", "task2event")>
-     Public Property task2event() As EntityCollection(Of task2event)
+     Public Property assignedTasks() As EntityCollection(Of task2event)
         Get
             Return CType(Me,IEntityWithRelationships).RelationshipManager.GetRelatedCollection(Of task2event)("action2eventsModel.FK_task2event_events", "task2event")
         End Get
@@ -382,7 +382,7 @@ Public Partial Class task
     <SoapIgnoreAttribute()>
     <DataMemberAttribute()>
     <EdmRelationshipNavigationPropertyAttribute("action2eventsModel", "FK_task2event_tasks", "task2event")>
-     Public Property task2event() As EntityCollection(Of task2event)
+     Public Property assignedEvents() As EntityCollection(Of task2event)
         Get
             Return CType(Me,IEntityWithRelationships).RelationshipManager.GetRelatedCollection(Of task2event)("action2eventsModel.FK_task2event_tasks", "task2event")
         End Get
@@ -400,7 +400,7 @@ Public Partial Class task
     <SoapIgnoreAttribute()>
     <DataMemberAttribute()>
     <EdmRelationshipNavigationPropertyAttribute("action2eventsModel", "FK_tasks_tasks", "tasks1")>
-     Public Property tasks1() As EntityCollection(Of task)
+     Public Property childrenTasks() As EntityCollection(Of task)
         Get
             Return CType(Me,IEntityWithRelationships).RelationshipManager.GetRelatedCollection(Of task)("action2eventsModel.FK_tasks_tasks", "tasks1")
         End Get
@@ -418,7 +418,7 @@ Public Partial Class task
     <SoapIgnoreAttribute()>
     <DataMemberAttribute()>
     <EdmRelationshipNavigationPropertyAttribute("action2eventsModel", "FK_tasks_tasks", "tasks")>
-    Public Property task1() As task
+    Public Property parentTask() As task
         Get
             Return CType(Me, IEntityWithRelationships).RelationshipManager.GetRelatedReference(Of task)("action2eventsModel.FK_tasks_tasks", "tasks").Value
         End Get
@@ -431,7 +431,7 @@ Public Partial Class task
     ''' </summary>
     <BrowsableAttribute(False)>
     <DataMemberAttribute()>
-    Public Property task1Reference() As EntityReference(Of task)
+    Public Property parentTaskReference() As EntityReference(Of task)
         Get
             Return CType(Me, IEntityWithRelationships).RelationshipManager.GetRelatedReference(Of task)("action2eventsModel.FK_tasks_tasks", "tasks")
         End Get
