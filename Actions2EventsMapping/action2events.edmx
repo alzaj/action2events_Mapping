@@ -102,6 +102,14 @@
             <End Role="tasks" EntitySet="tasks" />
             <End Role="tasks1" EntitySet="tasks" />
           </AssociationSet>
+          <AssociationSet Name="eventevent" Association="action2eventsModel.eventevent">
+            <End Role="event" EntitySet="events" />
+            <End Role="event1" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="taskevent" Association="action2eventsModel.taskevent">
+            <End Role="task" EntitySet="tasks" />
+            <End Role="event" EntitySet="events" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="event">
           <Key>
@@ -109,8 +117,12 @@
           </Key>
           <Property Name="event_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="title" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="attendedtask_id" Type="Int32" />
           <NavigationProperty Name="assignedTasks" Relationship="action2eventsModel.FK_task2event_events" FromRole="events" ToRole="task2event" />
+          <NavigationProperty Name="pinnedEvents" Relationship="action2eventsModel.eventevent" FromRole="event" ToRole="event1" />
+          <NavigationProperty Name="pinnedToEvent" Relationship="action2eventsModel.eventevent" FromRole="event1" ToRole="event" />
+          <Property Type="Int32" Name="pinnedtoevent_id" Nullable="true" />
+          <NavigationProperty Name="attendedTask" Relationship="action2eventsModel.taskevent" FromRole="event" ToRole="task" />
+          <Property Type="Int32" Name="attendedtask_id" Nullable="true" />
         </EntityType>
         <EntityType Name="task2event">
           <Key>
@@ -132,6 +144,7 @@
           <NavigationProperty Name="assignedEvents" Relationship="action2eventsModel.FK_task2event_tasks" FromRole="tasks" ToRole="task2event" />
           <NavigationProperty Name="childrenTasks" Relationship="action2eventsModel.FK_tasks_tasks" FromRole="tasks" ToRole="tasks1" />
           <NavigationProperty Name="parentTask" Relationship="action2eventsModel.FK_tasks_tasks" FromRole="tasks1" ToRole="tasks" />
+          <NavigationProperty Name="attendedToEvents" Relationship="action2eventsModel.taskevent" FromRole="task" ToRole="event" />
         </EntityType>
         <Association Name="FK_task2event_events">
           <End Role="events" Type="action2eventsModel.event" Multiplicity="1" />
@@ -169,6 +182,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="eventevent">
+          <End Type="action2eventsModel.event" Role="event" Multiplicity="0..1" />
+          <End Type="action2eventsModel.event" Role="event1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="event">
+              <PropertyRef Name="event_id" />
+            </Principal>
+            <Dependent Role="event1">
+              <PropertyRef Name="pinnedtoevent_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="taskevent">
+          <End Type="action2eventsModel.task" Role="task" Multiplicity="0..1" />
+          <End Type="action2eventsModel.event" Role="event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="task_id" />
+            </Principal>
+            <Dependent Role="event">
+              <PropertyRef Name="attendedtask_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -180,7 +217,6 @@
         <MappingFragment StoreEntitySet="events">
           <ScalarProperty Name="event_id" ColumnName="event_id" />
           <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="attendedtask_id" ColumnName="attendedtask_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -222,22 +258,32 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="action2events">
-        <EntityTypeShape EntityType="action2eventsModel.event" Width="1.5" PointX="5.25" PointY="1" Height="1.7879850260416674" IsExpanded="true" />
-        <EntityTypeShape EntityType="action2eventsModel.task2event" Width="1.5" PointX="3" PointY="1" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="action2eventsModel.event" Width="1.5" PointX="5.25" PointY="0.875" Height="2.5571907552083339" IsExpanded="true" />
+        <EntityTypeShape EntityType="action2eventsModel.task2event" Width="1.5" PointX="3" PointY="0.5" Height="1.9802864583333335" IsExpanded="true" />
         <EntityTypeShape EntityType="action2eventsModel.task" Width="1.5" PointX="0.75" PointY="0.875" Height="2.1725878906249996" IsExpanded="true" />
         <AssociationConnector Association="action2eventsModel.FK_task2event_events" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.25" PointY="1.8939925130208337" />
-          <ConnectorPoint PointX="4.5" PointY="1.8939925130208337" />
+          <ConnectorPoint PointX="5.25" PointY="1.6776432291666668" />
+          <ConnectorPoint PointX="4.5" PointY="1.6776432291666668" />
         </AssociationConnector>
         <AssociationConnector Association="action2eventsModel.FK_task2event_tasks" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="1.9901432291666668" />
-          <ConnectorPoint PointX="3" PointY="1.9901432291666668" />
+          <ConnectorPoint PointX="2.25" PointY="1.6776432291666668" />
+          <ConnectorPoint PointX="3" PointY="1.6776432291666668" />
         </AssociationConnector>
         <AssociationConnector Association="action2eventsModel.FK_tasks_tasks" ManuallyRouted="false">
           <ConnectorPoint PointX="1.2819230769230767" PointY="3.0475878906249996" />
           <ConnectorPoint PointX="1.2819230769230767" PointY="3.2975878906249996" />
           <ConnectorPoint PointX="1.7284615384615383" PointY="3.2975878906249996" />
           <ConnectorPoint PointX="1.7284615384615383" PointY="3.0475878906249996" />
+        </AssociationConnector>
+        <AssociationConnector Association="action2eventsModel.eventevent">
+          <ConnectorPoint PointX="5.7819230769230767" PointY="3.4321907552083339" />
+          <ConnectorPoint PointX="5.7819230769230767" PointY="3.6821907552083335" />
+          <ConnectorPoint PointX="6.2284615384615378" PointY="3.6821907552083335" />
+          <ConnectorPoint PointX="6.2284615384615378" PointY="3.4321907552083339" />
+        </AssociationConnector>
+        <AssociationConnector Association="action2eventsModel.taskevent">
+          <ConnectorPoint PointX="2.25" PointY="2.8913378906250005" />
+          <ConnectorPoint PointX="5.25" PointY="2.8913378906250005" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

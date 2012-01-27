@@ -16,11 +16,13 @@ Imports System.ComponentModel
 Imports System.Xml.Serialization
 Imports System.Runtime.Serialization
 
-<Assembly: EdmSchemaAttribute("9055fc79-6b74-48df-842b-ad9151f76c66")>
+<Assembly: EdmSchemaAttribute("504d9ba8-58bd-4aa5-b3c0-043f6f674525")>
 #Region "EDM Relationship Metadata"
 <Assembly: EdmRelationshipAttribute("action2eventsModel", "FK_task2event_events", "events", System.Data.Metadata.Edm.RelationshipMultiplicity.One, GetType([event]), "task2event", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, GetType(task2event), True)>
 <Assembly: EdmRelationshipAttribute("action2eventsModel", "FK_task2event_tasks", "tasks", System.Data.Metadata.Edm.RelationshipMultiplicity.One, GetType(task), "task2event", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, GetType(task2event), True)>
 <Assembly: EdmRelationshipAttribute("action2eventsModel", "FK_tasks_tasks", "tasks", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, GetType(task), "tasks1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, GetType(task), True)>
+<Assembly: EdmRelationshipAttribute("action2eventsModel", "eventevent", "event", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, GetType([event]), "event1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, GetType([event]), True)>
+<Assembly: EdmRelationshipAttribute("action2eventsModel", "taskevent", "task", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, GetType(task), "event", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, GetType([event]), True)>
 
 #End Region
 
@@ -226,6 +228,31 @@ Public Partial Class [event]
     ''' </summary>
     <EdmScalarPropertyAttribute(EntityKeyProperty:=false, IsNullable:=true)>
     <DataMemberAttribute()>
+    Public Property pinnedtoevent_id() As Nullable(Of Global.System.Int32)
+        Get
+            Return _pinnedtoevent_id
+        End Get
+        Set
+            Onpinnedtoevent_idChanging(value)
+            ReportPropertyChanging("pinnedtoevent_id")
+            _pinnedtoevent_id = StructuralObject.SetValidValue(value)
+            ReportPropertyChanged("pinnedtoevent_id")
+            Onpinnedtoevent_idChanged()
+        End Set
+    End Property
+
+    Private _pinnedtoevent_id As Nullable(Of Global.System.Int32)
+    Private Partial Sub Onpinnedtoevent_idChanging(value As Nullable(Of Global.System.Int32))
+    End Sub
+
+    Private Partial Sub Onpinnedtoevent_idChanged()
+    End Sub
+
+    ''' <summary>
+    ''' No Metadata Documentation available.
+    ''' </summary>
+    <EdmScalarPropertyAttribute(EntityKeyProperty:=false, IsNullable:=true)>
+    <DataMemberAttribute()>
     Public Property attendedtask_id() As Nullable(Of Global.System.Int32)
         Get
             Return _attendedtask_id
@@ -263,6 +290,86 @@ Public Partial Class [event]
         Set
             If (Not value Is Nothing)
                 CType(Me, IEntityWithRelationships).RelationshipManager.InitializeRelatedCollection(Of task2event)("action2eventsModel.FK_task2event_events", "task2event", value)
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' No Metadata Documentation available.
+    ''' </summary>
+    <XmlIgnoreAttribute()>
+    <SoapIgnoreAttribute()>
+    <DataMemberAttribute()>
+    <EdmRelationshipNavigationPropertyAttribute("action2eventsModel", "eventevent", "event1")>
+     Public Property pinnedEvents() As EntityCollection(Of [event])
+        Get
+            Return CType(Me,IEntityWithRelationships).RelationshipManager.GetRelatedCollection(Of [event])("action2eventsModel.eventevent", "event1")
+        End Get
+        Set
+            If (Not value Is Nothing)
+                CType(Me, IEntityWithRelationships).RelationshipManager.InitializeRelatedCollection(Of [event])("action2eventsModel.eventevent", "event1", value)
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' No Metadata Documentation available.
+    ''' </summary>
+    <XmlIgnoreAttribute()>
+    <SoapIgnoreAttribute()>
+    <DataMemberAttribute()>
+    <EdmRelationshipNavigationPropertyAttribute("action2eventsModel", "eventevent", "event")>
+    Public Property pinnedToEvent() As [event]
+        Get
+            Return CType(Me, IEntityWithRelationships).RelationshipManager.GetRelatedReference(Of [event])("action2eventsModel.eventevent", "event").Value
+        End Get
+        Set
+            CType(Me, IEntityWithRelationships).RelationshipManager.GetRelatedReference(Of [event])("action2eventsModel.eventevent", "event").Value = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' No Metadata Documentation available.
+    ''' </summary>
+    <BrowsableAttribute(False)>
+    <DataMemberAttribute()>
+    Public Property pinnedToEventReference() As EntityReference(Of [event])
+        Get
+            Return CType(Me, IEntityWithRelationships).RelationshipManager.GetRelatedReference(Of [event])("action2eventsModel.eventevent", "event")
+        End Get
+        Set
+            If (Not value Is Nothing)
+                CType(Me, IEntityWithRelationships).RelationshipManager.InitializeRelatedReference(Of [event])("action2eventsModel.eventevent", "event", value)
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' No Metadata Documentation available.
+    ''' </summary>
+    <XmlIgnoreAttribute()>
+    <SoapIgnoreAttribute()>
+    <DataMemberAttribute()>
+    <EdmRelationshipNavigationPropertyAttribute("action2eventsModel", "taskevent", "task")>
+    Public Property attendedTask() As task
+        Get
+            Return CType(Me, IEntityWithRelationships).RelationshipManager.GetRelatedReference(Of task)("action2eventsModel.taskevent", "task").Value
+        End Get
+        Set
+            CType(Me, IEntityWithRelationships).RelationshipManager.GetRelatedReference(Of task)("action2eventsModel.taskevent", "task").Value = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' No Metadata Documentation available.
+    ''' </summary>
+    <BrowsableAttribute(False)>
+    <DataMemberAttribute()>
+    Public Property attendedTaskReference() As EntityReference(Of task)
+        Get
+            Return CType(Me, IEntityWithRelationships).RelationshipManager.GetRelatedReference(Of task)("action2eventsModel.taskevent", "task")
+        End Get
+        Set
+            If (Not value Is Nothing)
+                CType(Me, IEntityWithRelationships).RelationshipManager.InitializeRelatedReference(Of task)("action2eventsModel.taskevent", "task", value)
             End If
         End Set
     End Property
@@ -438,6 +545,24 @@ Public Partial Class task
         Set
             If (Not value Is Nothing)
                 CType(Me, IEntityWithRelationships).RelationshipManager.InitializeRelatedReference(Of task)("action2eventsModel.FK_tasks_tasks", "tasks", value)
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' No Metadata Documentation available.
+    ''' </summary>
+    <XmlIgnoreAttribute()>
+    <SoapIgnoreAttribute()>
+    <DataMemberAttribute()>
+    <EdmRelationshipNavigationPropertyAttribute("action2eventsModel", "taskevent", "event")>
+     Public Property attendedToEvents() As EntityCollection(Of [event])
+        Get
+            Return CType(Me,IEntityWithRelationships).RelationshipManager.GetRelatedCollection(Of [event])("action2eventsModel.taskevent", "event")
+        End Get
+        Set
+            If (Not value Is Nothing)
+                CType(Me, IEntityWithRelationships).RelationshipManager.InitializeRelatedCollection(Of [event])("action2eventsModel.taskevent", "event", value)
             End If
         End Set
     End Property
