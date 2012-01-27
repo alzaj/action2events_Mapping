@@ -1,2 +1,6 @@
-*.*
+/*.*
+TestResults/
+!Actions2EventsMapping.Test/
+!Actions2EventsMapping/
+!.gitignore
 !todo.xml
