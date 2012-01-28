@@ -1,5 +1,6 @@
 ﻿Public Interface ITaskRepository
 #Region "Add"
+    Sub AddNewTask(ByVal taskToAdd As task)
 
 #End Region 'Add
 
@@ -12,12 +13,8 @@
 #End Region 'Update
 
 #Region "Select"
-
+    Function GetAllTasks() As IEnumerable(Of task)
 #End Region 'Select
 
-    Sub CreateNewTask(ByVal taskToCreate As task)
-    Sub DeleteTask(ByVal task_id As Integer)
-    Function GetTaskById(ByVal id As Integer) As task
-    Function GetAllTAsks() As IEnumerable(Of task)
     Function SaveChanges() As Integer
 End Interface

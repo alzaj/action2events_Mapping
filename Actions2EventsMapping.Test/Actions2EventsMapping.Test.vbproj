@@ -75,7 +75,14 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataManipulationTests.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Actions2EventsMapping\Actions2EventsMapping.vbproj">
+      <Project>{AC155C0B-2140-4DB1-A301-DA3EF1790D7C}</Project>
+      <Name>Actions2EventsMapping</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

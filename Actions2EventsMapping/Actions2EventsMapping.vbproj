@@ -80,8 +80,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>action2events.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Code\EntityTaskManagerRepository.vb" />
-    <Compile Include="Code\ITaskRepository.vb" />
+    <Compile Include="Model\InMemoryTaskRepository.vb" />
+    <Compile Include="Model\ITaskRepository.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +126,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\DataSources\action2eventsEntities.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>

@@ -21,6 +21,14 @@
       <End Role="tasks" EntitySet="tasks" />
       <End Role="tasks1" EntitySet="tasks" />
     </AssociationSet>
+    <AssociationSet Name="eventevent" Association="action2eventsModel.Store.eventevent">
+      <End Role="event" EntitySet="events" />
+      <End Role="event1" EntitySet="events" />
+    </AssociationSet>
+    <AssociationSet Name="taskevent" Association="action2eventsModel.Store.taskevent">
+      <End Role="task" EntitySet="tasks" />
+      <End Role="event" EntitySet="events" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="events">
     <Key>
@@ -28,6 +36,7 @@
     </Key>
     <Property Name="event_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="title" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="pinnedtoevent_id" Type="int" Nullable="true" />
     <Property Name="attendedtask_id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="task2event">
@@ -79,6 +88,30 @@
       </Principal>
       <Dependent Role="tasks1">
         <PropertyRef Name="parenttask_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="eventevent">
+    <End Role="event" Type="action2eventsModel.Store.events" Multiplicity="0..1" />
+    <End Role="event1" Type="action2eventsModel.Store.events" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="event">
+        <PropertyRef Name="event_id" />
+      </Principal>
+      <Dependent Role="event1">
+        <PropertyRef Name="pinnedtoevent_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="taskevent">
+    <End Role="task" Type="action2eventsModel.Store.tasks" Multiplicity="0..1" />
+    <End Role="event" Type="action2eventsModel.Store.events" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="task">
+        <PropertyRef Name="task_id" />
+      </Principal>
+      <Dependent Role="event">
+        <PropertyRef Name="attendedtask_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -217,6 +250,8 @@
         <MappingFragment StoreEntitySet="events">
           <ScalarProperty Name="event_id" ColumnName="event_id" />
           <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="pinnedtoevent_id" ColumnName="pinnedtoevent_id" />
+          <ScalarProperty Name="attendedtask_id" ColumnName="attendedtask_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

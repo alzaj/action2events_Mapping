@@ -16,7 +16,7 @@ Imports System.ComponentModel
 Imports System.Xml.Serialization
 Imports System.Runtime.Serialization
 
-<Assembly: EdmSchemaAttribute("504d9ba8-58bd-4aa5-b3c0-043f6f674525")>
+<Assembly: EdmSchemaAttribute("1342683a-b8c1-4c28-b6ed-5b56f309f3bf")>
 #Region "EDM Relationship Metadata"
 <Assembly: EdmRelationshipAttribute("action2eventsModel", "FK_task2event_events", "events", System.Data.Metadata.Edm.RelationshipMultiplicity.One, GetType([event]), "task2event", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, GetType(task2event), True)>
 <Assembly: EdmRelationshipAttribute("action2eventsModel", "FK_task2event_tasks", "tasks", System.Data.Metadata.Edm.RelationshipMultiplicity.One, GetType(task), "task2event", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, GetType(task2event), True)>

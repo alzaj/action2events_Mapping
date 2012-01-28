@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 01/10/2012 15:31:17
--- Generated from EDMX file: C:\Users\zajcev\winapps\Actions2EventsMapping\Actions2EventsMapping\action2events.edmx
+-- Date Created: 01/28/2012 18:07:56
+-- Generated from EDMX file: C:\projects\winapps\Actions2EventsMapping\Actions2EventsMapping\action2events.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -49,6 +49,7 @@ GO
 CREATE TABLE [dbo].[events] (
     [event_id] int IDENTITY(1,1) NOT NULL,
     [title] nvarchar(200)  NOT NULL,
+    [pinnedtoevent_id] int  NULL,
     [attendedtask_id] int  NULL
 );
 GO
@@ -135,6 +136,34 @@ ADD CONSTRAINT [FK_tasks_tasks]
 CREATE INDEX [IX_FK_tasks_tasks]
 ON [dbo].[tasks]
     ([parenttask_id]);
+GO
+
+-- Creating foreign key on [pinnedtoevent_id] in table 'events'
+ALTER TABLE [dbo].[events]
+ADD CONSTRAINT [FK_eventevent]
+    FOREIGN KEY ([pinnedtoevent_id])
+    REFERENCES [dbo].[events]
+        ([event_id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_eventevent'
+CREATE INDEX [IX_FK_eventevent]
+ON [dbo].[events]
+    ([pinnedtoevent_id]);
+GO
+
+-- Creating foreign key on [attendedtask_id] in table 'events'
+ALTER TABLE [dbo].[events]
+ADD CONSTRAINT [FK_taskevent]
+    FOREIGN KEY ([attendedtask_id])
+    REFERENCES [dbo].[tasks]
+        ([task_id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_taskevent'
+CREATE INDEX [IX_FK_taskevent]
+ON [dbo].[events]
+    ([attendedtask_id]);
 GO
 
 -- --------------------------------------------------
